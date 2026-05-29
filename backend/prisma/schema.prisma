@@ -1,0 +1,167 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  LEARNER
+  PROFESSIONAL
+  RECRUITER
+  COMPANY_ADMIN
+  PLATFORM_ADMIN
+}
+
+enum OpportunityType {
+  JOB
+  INTERNSHIP
+  GIG
+  HACKATHON
+}
+
+model User {
+  id              String    @id @default(uuid())
+  email           String    @unique
+  password        String
+  role            Role      @default(LEARNER)
+  isVerified      Boolean   @default(false)
+  verificationToken String?
+  resetToken      String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  profile         Profile?
+  posts           Post[]
+  comments        Comment[]
+  likes           Like[]
+  applications    Application[]
+  managedCompanies Company[]
+}
+
+model Profile {
+  id              String    @id @default(uuid())
+  userId          String    @unique
+  user            User      @relation(fields: [userId], references: [id])
+  firstName       String?
+  lastName        String?
+  bio             String?
+  avatarUrl       String?
+  skills          String[]
+  projectHistory  Json?
+  certifications  Json?
+  visibility      Boolean   @default(true)
+  followers       Follow[]  @relation("following")
+  following       Follow[]  @relation("follower")
+}
+
+model Follow {
+  id              String    @id @default(uuid())
+  followerId      String
+  followingId     String
+  follower        Profile   @relation("follower", fields: [followerId], references: [id])
+  following       Profile   @relation("following", fields: [followingId], references: [id])
+
+  @@unique([followerId, followingId])
+}
+
+model Post {
+  id              String    @id @default(uuid())
+  authorId        String
+  author          User      @relation(fields: [authorId], references: [id])
+  content         String
+  mediaUrls       String[]
+  tags            String[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  likes           Like[]
+  comments        Comment[]
+}
+
+model Comment {
+  id              String    @id @default(uuid())
+  postId          String
+  post            Post      @relation(fields: [postId], references: [id])
+  authorId        String
+  author          User      @relation(fields: [authorId], references: [id])
+  content         String
+  createdAt       DateTime  @default(now())
+}
+
+model Like {
+  id              String    @id @default(uuid())
+  postId          String
+  post            Post      @relation(fields: [postId], references: [id])
+  userId          String
+  user            User      @relation(fields: [userId], references: [id])
+
+  @@unique([postId, userId])
+}
+
+model LearningPath {
+  id              String    @id @default(uuid())
+  title           String
+  description     String
+  thumbnailUrl    String?
+  tags            String[]
+  sections        CourseSection[]
+  createdAt       DateTime  @default(now())
+}
+
+model CourseSection {
+  id              String    @id @default(uuid())
+  pathId          String
+  path            LearningPath @relation(fields: [pathId], references: [id])
+  title           String
+  content         String?
+  order           Int
+}
+
+model Company {
+  id              String    @id @default(uuid())
+  adminId         String
+  admin           User      @relation(fields: [adminId], references: [id])
+  name            String
+  logoUrl         String?
+  description     String?
+  isVerified      Boolean   @default(false)
+  opportunities   Opportunity[]
+  createdAt       DateTime  @default(now())
+}
+
+model Opportunity {
+  id              String    @id @default(uuid())
+  companyId       String
+  company         Company   @relation(fields: [companyId], references: [id])
+  title           String
+  type            OpportunityType @default(JOB)
+  description     String
+  requirements    String[]
+  location        String?
+  salary          String?
+  applications    Application[]
+  createdAt       DateTime  @default(now())
+}
+
+model Application {
+  id              String    @id @default(uuid())
+  opportunityId   String
+  opportunity     Opportunity @relation(fields: [opportunityId], references: [id])
+  userId          String
+  user            User      @relation(fields: [userId], references: [id])
+  status          String    @default("PENDING") // PENDING, REVIEWED, ACCEPTED, REJECTED
+  resumeUrl       String?
+  createdAt       DateTime  @default(now())
+}
+
+model Notification {
+  id              String    @id @default(uuid())
+  userId          String
+  type            String
+  content         String
+  isRead          Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+}
