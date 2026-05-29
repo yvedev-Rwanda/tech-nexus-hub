@@ -118,7 +118,7 @@ app.get('/api/opportunities', async (req, res) => {
 });
 
 // Server Listen
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5002;
 app.listen(PORT, () => {
     console.log(`🚀 VEXA Backend running on http://localhost:${PORT}`);
     if (!isFirebaseConnected) console.log('💡 TIP: Add real credentials to serviceAccountKey.json to enable Database persistence.');

@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: vexa-platform
+    name: vexa-frontend
     env: node
     plan: free
     buildCommand: npm install && npm run build
@@ -12,3 +12,16 @@ services:
         value: 10000
     staticPublishPath: .output/public
     healthCheckPath: /
+
+  - type: web
+    name: vexa-backend
+    env: node
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && node server.js
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: PORT
+        value: 5002
+
