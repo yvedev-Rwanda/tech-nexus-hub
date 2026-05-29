@@ -3,13 +3,15 @@ services:
     name: vexa-frontend
     env: node
     plan: free
-    buildCommand: npm install && npm run build
+    buildCommand: npm install && NITRO_PRESET=node-server npm run build
     startCommand: node .output/server/index.mjs
     envVars:
       - key: NODE_VERSION
         value: 20
       - key: PORT
         value: 10000
+      - key: NITRO_PRESET
+        value: node-server
     healthCheckPath: /
 
   - type: web
