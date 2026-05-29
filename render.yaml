@@ -10,7 +10,6 @@ services:
         value: 20
       - key: PORT
         value: 10000
-    staticPublishPath: .output/public
     healthCheckPath: /
 
   - type: web
