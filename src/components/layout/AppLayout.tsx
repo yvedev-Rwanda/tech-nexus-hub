@@ -1,24 +1,29 @@
 import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import {
+  Home,
+  Users,
   Rss,
   GraduationCap,
-  Users,
   Building2,
   Briefcase,
-  Home,
+  LogOut,
   Bell,
   Search,
+  ChevronRight,
+  Sun,
+  Moon,
   UserCircle,
-  Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useAuth } from "@/hooks/useAuth";
+import { useTheme } from "@/components/theme-provider";
 import logo from "@/assets/logo.png";
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const { user, profile, logout } = useAuth();
+  const { theme, setTheme } = useTheme();
   const { t } = useTranslation();
 
   const navItems = [
@@ -31,9 +36,9 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   ];
 
   return (
-    <div className="flex min-h-screen bg-background text-foreground">
+    <div className="flex min-h-screen bg-background text-foreground transition-colors duration-500">
       {/* Sidebar */}
-      <aside className="fixed left-0 top-0 z-40 h-full w-64 border-r border-border/40 bg-card/30 backdrop-blur-xl">
+      <aside className="fixed left-0 top-0 z-40 h-full w-64 border-r border-border/40 bg-card/30 backdrop-blur-xl flex flex-col">
         <div className="flex h-16 items-center gap-2 px-6">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-black border border-primary/20 shadow-[var(--shadow-glow)] overflow-hidden">
              <img src={logo} alt="VEXA" className="h-full w-full object-cover" />
@@ -41,29 +46,48 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           <span className="text-xl font-bold tracking-tighter bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">VEXA</span>
         </div>
 
-        <nav className="mt-8 space-y-1 px-4">
+        <nav className="flex-1 space-y-1 p-4">
           {navItems.map((item) => (
             <Link
               key={item.href}
               to={item.href}
-              className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-muted-foreground transition-all hover:bg-card hover:text-foreground active:scale-95"
-              activeProps={{ className: "bg-card text-foreground shadow-[var(--shadow-card)]" }}
+              className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all hover:bg-primary/10 hover:text-primary group"
+              activeProps={{ className: "bg-primary/20 text-primary shadow-sm shadow-primary/20" }}
             >
-              <item.icon className="h-5 w-5" />
+              <item.icon className="h-5 w-5 transition-transform group-hover:scale-110" />
               {item.label}
+              <ChevronRight className="ml-auto h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
             </Link>
           ))}
         </nav>
 
-        <div className="absolute bottom-8 w-full px-4 space-y-3">
-          {/* Language Switcher */}
-          <LanguageSwitcher />
+        {/* Sidebar Footer: Theme Toggle & Credits */}
+        <div className="p-4 border-t border-border/40 space-y-4">
+             <div className="flex items-center justify-between px-4 py-2 rounded-xl bg-background/50 border border-border/40">
+                  <span className="text-xs font-bold uppercase tracking-widest opacity-60">Theme</span>
+                  <button 
+                    onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                    className="p-2 rounded-lg bg-card border border-border/40 hover:bg-accent transition-colors"
+                  >
+                    {theme === "dark" ? <Sun className="h-4 w-4 text-primary" /> : <Moon className="h-4 w-4 text-primary" />}
+                  </button>
+             </div>
 
-          <div className="rounded-2xl border border-border bg-card/50 p-4 backdrop-blur">
-            <p className="text-xs font-semibold uppercase tracking-wider text-accent mb-2">{t("common.proPlan")}</p>
-            <p className="text-xs text-muted-foreground mb-3">{t("common.proDesc")}</p>
-            <Button variant="outline" className="w-full text-xs h-8">{t("common.upgrade")}</Button>
-          </div>
+             <div className="px-4 text-[10px] font-bold text-center">
+                  <p className="opacity-50 uppercase tracking-[0.2em]">Developed by</p>
+                  <p className="text-primary mt-1">yvedev Rwanda</p>
+             </div>
+
+             <div className="px-4 pb-2">
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start gap-3 rounded-xl py-6 hover:bg-destructive/10 hover:text-destructive group"
+                  onClick={logout}
+                >
+                  <LogOut className="h-5 w-5 transition-transform group-hover:-translate-x-1" />
+                  <span className="text-sm font-bold">{t("nav.logout")}</span>
+                </Button>
+             </div>
         </div>
       </aside>
 

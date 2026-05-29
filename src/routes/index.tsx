@@ -124,19 +124,19 @@ function Landing() {
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/40 to-background" />
         
-        <div className="relative z-10 mx-auto max-w-5xl px-6 text-center animate-reveal">
+        <div className="relative z-10 mx-auto max-w-[1200px] px-8 text-center animate-reveal">
           <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-xs font-bold uppercase tracking-widest text-primary backdrop-blur-md">
             <span className="h-2 w-2 animate-pulse rounded-full bg-primary" />
             {t("landing.badge")}
           </div>
-          <h1 className="text-balance text-6xl font-black leading-[1.0] tracking-tighter md:text-8xl">
+          <h1 className="text-balance text-4xl font-black leading-[1.1] tracking-tighter md:text-6xl lg:text-7xl">
             <span className="bg-[image:var(--gradient-text)] bg-clip-text text-transparent">
               {t("landing.heroTitle1")}
             </span>
             <br />
             <span className="text-foreground">{t("landing.heroTitle2")}</span>
           </h1>
-          <p className="mx-auto mt-8 max-w-2xl text-pretty text-xl text-muted-foreground leading-relaxed">
+          <p className="mx-auto mt-6 max-w-xl text-pretty text-lg text-muted-foreground leading-relaxed opacity-70">
             {t("landing.heroSubtitle")}
           </p>
           <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
@@ -378,23 +378,74 @@ function Landing() {
          <div className="absolute inset-0 z-0 opacity-40 bg-[image:var(--gradient-hero)]" />
          <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
             <h2 className="text-5xl md:text-7xl font-black tracking-tighter mb-8 leading-none">
-               The future of tech <br /> is <span className="bg-[image:var(--gradient-text)] bg-clip-text text-transparent">connected.</span>
+                The future of tech <br /> is <span className="bg-[image:var(--gradient-text)] bg-clip-text text-transparent">connected.</span>
             </h2>
             <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
                This platform creates a closed-loop ecosystem for tech growth. It removes fragmentation and replaces it with a single structured system that connects education, community, companies, and employment.
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
-               <Link 
-                 to="/feed" 
-                 className="h-14 px-10 rounded-2xl bg-primary text-primary-foreground font-black text-lg shadow-[var(--shadow-glow)] flex items-center justify-center transition-transform hover:scale-105"
-               >
-                 Start your Journey
-               </Link>
-               <Button variant="outline" className="h-14 px-10 rounded-2xl glass-dark font-black text-lg">
-                 Company Solutions
-               </Button>
+            <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
+            <Link to="/auth">
+              <Button size="lg" className="h-12 rounded-xl px-8 font-bold shadow-[var(--shadow-glow)]">
+                Join Now
+              </Button>
+            </Link>
+            <a href="#world">
+              <Button size="lg" variant="outline" className="h-12 rounded-xl px-8 border-border/40 bg-background/50 backdrop-blur-md">
+                View Ecosystem
+              </Button>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Global Stats */}
+      <section className="border-y border-border/40 bg-card/10 py-16 backdrop-blur-sm">
+        <div className="mx-auto max-w-[1400px] px-8">
+          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+            {[
+              { label: "Talent Worldwide", value: "25k+" },
+              { label: "Countries Active", value: "62" },
+              { label: "Learning Paths", value: "140+" },
+              { label: "Tech Companies", value: "850+" },
+            ].map((stat, idx) => (
+              <div key={idx} className="text-center">
+                <div className="text-3xl font-black text-primary md:text-4xl">{stat.value}</div>
+                <div className="mt-2 text-xs font-bold uppercase tracking-widest text-muted-foreground">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* World Map Section */}
+      <section id="world" className="relative overflow-hidden py-32">
+        <div className="mx-auto max-w-[1200px] px-8">
+          <div className="grid items-center gap-16 lg:grid-cols-2">
+            <div>
+              <Badge variant="outline" className="mb-4 border-primary/20 text-primary">Global Connectivity</Badge>
+              <h2 className="mb-6 text-4xl font-black md:text-5xl">VEXA: A World Without Borders</h2>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Our ecosystem connects local talent from Rwanda to global tech hubs—Silicon Valley, Berlin, Singapore, and Bangalore. We are building the future where geographic barriers don't limit professional potential.
+              </p>
+              <div className="mt-8 space-y-4">
+                {[
+                  "Verified Skills standard across 50+ languages",
+                  "Global job matching with real-time currency conversion",
+                  "Cross-border mentorship and project collaboration"
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-primary" />
+                    <span className="font-medium">{item}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-         </div>
+            <div className="relative aspect-video overflow-hidden rounded-3xl border border-border/40 bg-card shadow-elegant">
+              <img src="/src/assets/global-map.png" alt="Global Connectivity Map" className="h-full w-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Footer */}

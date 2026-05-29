@@ -179,6 +179,21 @@ function FeedPage() {
 
         {/* Sidebar */}
         <div className="space-y-6">
+          {/* VEXA Premium Visual: Roadmap */}
+          <Card className="border-border/40 bg-card/30 backdrop-blur overflow-hidden group">
+            <div className="relative h-32 overflow-hidden">
+               <img src="/src/assets/dashboard-main.png" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Roadmap" />
+               <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
+               <div className="absolute bottom-2 left-4">
+                  <span className="text-[10px] font-black uppercase bg-primary px-2 py-0.5 rounded text-primary-foreground">Beta 2.0</span>
+               </div>
+            </div>
+            <CardContent className="p-4">
+               <h4 className="text-sm font-black mb-1">Ecosystem Roadmap</h4>
+               <p className="text-[11px] text-muted-foreground leading-tight">Scale your verified skills to a global talent pool. VEXA 2.0 integration starts next week.</p>
+            </CardContent>
+          </Card>
+
           <Card className="border-border/40 bg-card/30 backdrop-blur">
             <CardContent className="p-6">
               <div className="flex items-center gap-2 mb-4 text-accent">
@@ -197,6 +212,18 @@ function FeedPage() {
                 {t("feed.viewAll")}
               </Button>
             </CardContent>
+          </Card>
+
+          {/* VEXA Premium Visual: Global Impact */}
+          <Card className="border-border/40 bg-card/30 backdrop-blur overflow-hidden">
+            <div className="p-4 flex flex-col items-center text-center">
+               <div className="h-24 w-full rounded-xl overflow-hidden mb-4 border border-border/40">
+                  <img src="/src/assets/learning-path.png" className="w-full h-full object-cover" alt="Learning" />
+               </div>
+               <h4 className="text-sm font-black mb-2">Global Talent Badge</h4>
+               <p className="text-[11px] text-muted-foreground mb-4">You are in the top 5% of active learners in your region. Complete the next path to unlock global referrals.</p>
+               <Button size="sm" className="w-full rounded-xl font-bold text-[10px] bg-accent text-accent-foreground uppercase">Verify Skills</Button>
+            </div>
           </Card>
 
           <Card className="border-border/40 bg-card/30 backdrop-blur overflow-hidden relative">

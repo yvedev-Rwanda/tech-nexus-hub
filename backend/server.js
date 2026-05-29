@@ -29,8 +29,8 @@ app.use(express.json());
 
 // --- MOCK DATA FOR "GOOD RUN" ---
 const MOCK_POSTS = [
-    { id: '1', name: "Alex Rivera", role: "VEXA Architect", content: "Welcome to the VEXA Ecosystem! 🚀 The backend is running in stable mode.", likes_count: 12, comments_count: 2, tags: "vxea, tech", avatar_url: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop", created_at: new Date().toISOString() },
-    { id: '2', name: "Sara Jean", role: "Developer", content: "Love the new internationalized UI. VEXA is going global!", likes_count: 5, comments_count: 0, tags: "vxea, design", avatar_url: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop", created_at: new Date().toISOString() }
+    { id: '1', name: "Yve Dev", role: "VEXA Founder", content: "Welcome to the future of the global tech network. Connect, learn, and grow across borders. 🌍✨", likes_count: 24, comments_count: 5, tags: "vxea, global, tech", avatar_url: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&h=100&fit=crop", created_at: new Date().toISOString() },
+    { id: '2', name: "Jean de Dieu", role: "Frontend Lead", content: "Our Rwandan talent is now connected to the world hubs. VEXA 2.0 is live!", likes_count: 18, comments_count: 3, tags: "vxea, rwanda, tech", avatar_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop", created_at: new Date().toISOString() }
 ];
 
 const MOCK_COURSES = [
