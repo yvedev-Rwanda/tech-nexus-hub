@@ -78,10 +78,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "Learn, Connect, Grow with VEXA." },
       { name: "author", content: "VEXA" },
       { property: "og:title", content: "VEXA - Unified Tech Ecosystem" },
-      { property: "og:description", content: "Unified Tech Ecosystem Platform" },
+      { property: "og:description", content: "Learn, Connect, Grow with VEXA." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@vexa" },
+      { name: "twitter:title", content: "VEXA - Unified Tech Ecosystem" },
+      { name: "twitter:description", content: "Learn, Connect, Grow with VEXA." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ea46a6cd-073e-4761-af44-f2feab05d241/id-preview-d1d0d6b1--549b7e8f-d3a8-4eef-a52a-a7ca5e9dcf48.lovable.app-1780133602310.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ea46a6cd-073e-4761-af44-f2feab05d241/id-preview-d1d0d6b1--549b7e8f-d3a8-4eef-a52a-a7ca5e9dcf48.lovable.app-1780133602310.png" },
     ],
     links: [
       {
