@@ -1,64 +1,74 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-// import { onAuthStateChanged, User, signOut } from 'firebase/auth';
-import { auth, db } from '../lib/firebase';
-// import { doc, getDoc } from 'firebase/firestore';
+import type { User } from '@supabase/supabase-js';
+import { supabase } from '@/integrations/supabase/client';
 
-type User = any;
+interface Profile {
+  id: string;
+  first_name: string | null;
+  last_name: string | null;
+  role: string | null;
+  avatar_url: string | null;
+}
 
 interface AuthContextType {
-  user: any | null;
-  profile: any | null;
+  user: User | null;
+  profile: (Profile & { firstName?: string; lastName?: string }) | null;
   loading: boolean;
-  login: (email: string) => void;
-  logout: () => void;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
   profile: null,
   loading: true,
-  login: () => {},
-  logout: () => {},
+  logout: async () => {},
 });
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<any | null>(null);
-  const [profile, setProfile] = useState<any | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [profile, setProfile] = useState<AuthContextType['profile']>(null);
+  const [loading, setLoading] = useState(true);
 
-  const login = (email: string) => {
-    const mockUser = { uid: 'mock-123', email, photoURL: null };
-    const mockProfile = { firstName: 'VEXA', lastName: 'Builder', role: 'LEARNER' };
-    setUser(mockUser);
-    setProfile(mockProfile);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('vxea_mock_user', JSON.stringify({ mockUser, mockProfile }));
-    }
-  };
-
-  const logout = () => {
-    setUser(null);
-    setProfile(null);
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('vxea_mock_user');
-    }
+  const loadProfile = (uid: string) => {
+    // Defer to avoid deadlocks inside onAuthStateChange
+    setTimeout(async () => {
+      const { data } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', uid)
+        .maybeSingle();
+      if (data) {
+        setProfile({
+          ...data,
+          firstName: data.first_name ?? undefined,
+          lastName: data.last_name ?? undefined,
+        });
+      }
+    }, 0);
   };
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('vxea_mock_user');
-      if (saved) {
-        try {
-          const { mockUser, mockProfile } = JSON.parse(saved);
-          setUser(mockUser);
-          setProfile(mockProfile);
-        } catch (e) {}
-      }
-    }
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+      if (session?.user) loadProfile(session.user.id);
+      else setProfile(null);
+    });
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+      if (session?.user) loadProfile(session.user.id);
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
+  const logout = async () => {
+    await supabase.auth.signOut();
+  };
+
   return (
-    <AuthContext.Provider value={{ user, profile, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, profile, loading, logout }}>
       {children}
     </AuthContext.Provider>
   );
