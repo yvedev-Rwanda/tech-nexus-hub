@@ -102,9 +102,9 @@ function Landing() {
           </nav>
           <div className="flex items-center gap-4">
              <LanguageSwitcher />
-             <Link to="/feed" className="hidden sm:block text-sm font-medium hover:text-primary transition-colors ml-2">Sign In</Link>
+             <Link to="/auth" className="hidden sm:block text-sm font-medium hover:text-primary transition-colors ml-2">Sign In</Link>
              <Link 
-               to="/feed" 
+               to="/auth" 
                className="rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-[var(--shadow-glow)] transition-[var(--transition-smooth)] hover:scale-105 active:scale-95"
              >
                {t("landing.getStarted")}
