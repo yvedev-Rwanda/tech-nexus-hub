@@ -40,7 +40,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
       <aside className="fixed left-0 top-0 z-40 h-full w-64 border-r border-border/40 bg-card/30 backdrop-blur-xl flex flex-col">
         <div className="flex h-16 items-center gap-2 px-6">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-black border border-primary/20 shadow-[var(--shadow-glow)] overflow-hidden">
-             <img src="/src/assets/logo.png" alt="VEXA" className="h-full w-full object-cover" />
+             <img src={logo} alt="VEXA" className="h-full w-full object-cover" />
           </div>
           <span className="text-xl font-bold tracking-tighter bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">VEXA</span>
         </div>
