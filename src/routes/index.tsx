@@ -89,8 +89,8 @@ function Landing() {
       <header className="fixed top-0 z-50 w-full border-b border-border/40 bg-background/70 backdrop-blur-xl transition-[var(--transition-smooth)]">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-black border border-primary/20 shadow-[var(--shadow-glow)] overflow-hidden">
-              <img src={logo} alt="VEXA" className="h-full w-full object-cover" />
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary border border-primary/20 shadow-[var(--shadow-glow)] overflow-hidden">
+              <img src={logo} alt="VEXA" className="h-full w-full object-cover brightness-0 invert" />
             </div>
             <span className="text-lg font-bold tracking-tight">VEXA</span>
           </div>
@@ -146,6 +146,13 @@ function Landing() {
             >
               {t("landing.getStarted")}
               <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </Link>
+            <Link
+              to="/onboarding"
+              className="group inline-flex items-center gap-2 rounded-2xl border border-primary/30 bg-primary/5 px-8 py-4 text-base font-bold text-foreground backdrop-blur-xl transition-all hover:bg-primary/10 hover:border-primary/60 hover:scale-105"
+            >
+              <PlayCircle className="h-5 w-5 text-primary transition-transform group-hover:scale-110" />
+              How It Works
             </Link>
             <a
               href="#modules"

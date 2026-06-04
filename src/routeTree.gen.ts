@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as OpportunitiesRouteImport } from './routes/opportunities'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as NetworkRouteImport } from './routes/network'
 import { Route as LearningRouteImport } from './routes/learning'
 import { Route as FeedRouteImport } from './routes/feed'
@@ -20,6 +21,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const OpportunitiesRoute = OpportunitiesRouteImport.update({
   id: '/opportunities',
   path: '/opportunities',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NetworkRoute = NetworkRouteImport.update({
@@ -60,6 +66,7 @@ export interface FileRoutesByFullPath {
   '/feed': typeof FeedRoute
   '/learning': typeof LearningRoute
   '/network': typeof NetworkRoute
+  '/onboarding': typeof OnboardingRoute
   '/opportunities': typeof OpportunitiesRoute
 }
 export interface FileRoutesByTo {
@@ -69,6 +76,7 @@ export interface FileRoutesByTo {
   '/feed': typeof FeedRoute
   '/learning': typeof LearningRoute
   '/network': typeof NetworkRoute
+  '/onboarding': typeof OnboardingRoute
   '/opportunities': typeof OpportunitiesRoute
 }
 export interface FileRoutesById {
@@ -79,6 +87,7 @@ export interface FileRoutesById {
   '/feed': typeof FeedRoute
   '/learning': typeof LearningRoute
   '/network': typeof NetworkRoute
+  '/onboarding': typeof OnboardingRoute
   '/opportunities': typeof OpportunitiesRoute
 }
 export interface FileRouteTypes {
@@ -90,6 +99,7 @@ export interface FileRouteTypes {
     | '/feed'
     | '/learning'
     | '/network'
+    | '/onboarding'
     | '/opportunities'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -99,6 +109,7 @@ export interface FileRouteTypes {
     | '/feed'
     | '/learning'
     | '/network'
+    | '/onboarding'
     | '/opportunities'
   id:
     | '__root__'
@@ -108,6 +119,7 @@ export interface FileRouteTypes {
     | '/feed'
     | '/learning'
     | '/network'
+    | '/onboarding'
     | '/opportunities'
   fileRoutesById: FileRoutesById
 }
@@ -118,6 +130,7 @@ export interface RootRouteChildren {
   FeedRoute: typeof FeedRoute
   LearningRoute: typeof LearningRoute
   NetworkRoute: typeof NetworkRoute
+  OnboardingRoute: typeof OnboardingRoute
   OpportunitiesRoute: typeof OpportunitiesRoute
 }
 
@@ -128,6 +141,13 @@ declare module '@tanstack/react-router' {
       path: '/opportunities'
       fullPath: '/opportunities'
       preLoaderRoute: typeof OpportunitiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/network': {
@@ -182,6 +202,7 @@ const rootRouteChildren: RootRouteChildren = {
   FeedRoute: FeedRoute,
   LearningRoute: LearningRoute,
   NetworkRoute: NetworkRoute,
+  OnboardingRoute: OnboardingRoute,
   OpportunitiesRoute: OpportunitiesRoute,
 }
 export const routeTree = rootRouteImport
