@@ -12,6 +12,52 @@ export interface Post {
   role: string;
 }
 
+export interface Course {
+  id: string;
+  title: string;
+  description: string;
+  icon_name: string;
+  level: string;
+  total_modules: number;
+  duration: string;
+  color_class: string;
+}
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  bio: string;
+  avatar_url: string;
+  level: number;
+  skill_points: number;
+}
+
+export interface Company {
+  id: string;
+  name: string;
+  tagline: string;
+  logo_url: string;
+  industry: string;
+  employee_count: string;
+  open_roles: number;
+  is_verified: boolean;
+  website: string;
+}
+
+export interface Opportunity {
+  id: string;
+  title: string;
+  location: string;
+  salary_range: string;
+  type: string;
+  tags: string;
+  match_percentage: number;
+  company_name: string;
+  logo_url: string;
+}
+
 export async function getPosts(): Promise<Post[]> {
   const { data: posts, error } = await supabase
     .from("posts")
@@ -47,7 +93,7 @@ export async function getPosts(): Promise<Post[]> {
   });
 }
 
-export async function createPost(body: { content: string; tags?: string }) {
+export async function createPost(body: { content: string; tags?: string; user_id?: string }) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) throw new Error("Not authenticated");
   const { data, error } = await supabase
@@ -58,3 +104,8 @@ export async function createPost(body: { content: string; tags?: string }) {
   if (error) throw error;
   return data;
 }
+
+export const getCourses = async (): Promise<Course[]> => [];
+export const getUsers = async (): Promise<User[]> => [];
+export const getCompanies = async (): Promise<Company[]> => [];
+export const getOpportunities = async (): Promise<Opportunity[]> => [];
