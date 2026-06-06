@@ -127,7 +127,7 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vexa-theme">
+    <ThemeProvider defaultTheme="light" storageKey="vexa-theme">
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <Outlet />
